@@ -2,33 +2,18 @@
 
 
 #include <iostream>
-#include <windows.h>
+#include "windows.h"
 #include <C:\Program Files\MySQL\MySQL Server 8.0\include\mysql.h>
-
 #include <conio.h>
+#include "functions.cpp"
+#include "classes.h"
 using namespace std;
-int main(){
-    /*
-    MYSQL* conn=NULL;
-    conn = mysql_init(0);
-    conn = mysql_real_connect(conn, "localhost", "root", "12345678", "rough", 0, NULL, 0);
 
-    if(conn){
-        std::cout << "Connected" << endl;
-    } else {
-        std::cout << "Not connected" << endl;
-    }
-    int res=mysql_query(conn,"Insert into stud values(3)");
-    if (res!=0){
-        std::cout<<"error";
-    }
-    else{
-        std::cout<<"success";
-    }
-*/
-    /*START*/
+/*CLASSES*/
 
-    std::cout<<"WELCOME TO THE BOOKSTORE!";
+
+void menu(){
+     std::cout<<"WELCOME TO THE BOOKSTORE!";
 
     string ans="yes";
     while (ans=="yes"){
@@ -40,7 +25,7 @@ int main(){
         std::cin>>c;
         switch(c){
             case 1:
-            std::cout<<"A";
+            book_menu();
             break;
             
             case 2:
@@ -77,3 +62,30 @@ int main(){
 
     }
 }
+
+int main(){
+    /*
+    MYSQL* conn=NULL;
+    conn = mysql_init(0);
+    conn = mysql_real_connect(conn, "localhost", "root", "12345678", "rough", 0, NULL, 0);
+
+    if(conn){
+        std::cout << "Connected" << endl;
+    } else {
+        std::cout << "Not connected" << endl;
+    }
+    int res=mysql_query(conn,"Insert into stud values(3)");
+    if (res!=0){
+        std::cout<<"error";
+    }
+    else{
+        std::cout<<"success";
+    }
+*/
+    /*START*/
+
+   menu();
+    return 0;
+}
+
+/*FUNCTIONS FOR MENUS OF DIFFERENT CATEGORIES*/
