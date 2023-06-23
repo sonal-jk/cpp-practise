@@ -1,4 +1,4 @@
-/*BOOKSTORE MANAGEMENT SYSTEM*/
+/*---BOOKSTORE MANAGEMENT SYSTEM---*/
 
 
 #include <iostream>
@@ -8,6 +8,7 @@
 #include <conio.h>
 
 using namespace std;
+MYSQL* conn=NULL;
 
 
 /*CLASSES*/
@@ -27,9 +28,9 @@ using namespace std;
         std::cout<<"Enter book's price :";
         std::cin>>price;
         std::cout<<"/n";
-
-        int res=mysql_query(conn,"Insert into stud values(3)");
-
+        /*string stat="Insert into books values" + "(" + ")";
+        int res=mysql_query(conn,stat);
+*/
     }
 
 
@@ -45,8 +46,6 @@ void sales_menu();
 
 
 int main(){
-    
-    MYSQL* conn=NULL;
     conn = mysql_init(0);
     conn = mysql_real_connect(conn, "localhost", "root", "12345678", "rough", 0, NULL, 0);
 
