@@ -4,9 +4,37 @@
 #include <iostream>
 #include "windows.h"
 #include <C:\Program Files\MySQL\MySQL Server 8.0\include\mysql.h>
+#include "classes.h"
 #include <conio.h>
 
 using namespace std;
+
+
+/*CLASSES*/
+    void Book::add(){
+        std::cout<<"Enter book id :";
+        std::cin>>id;
+        std::cout<<"/n";
+        std::cout<<"Enter book's name :";
+        std::cin>>name;
+        std::cout<<"/n";
+        std::cout<<"Enter author's name :";
+        std::cin>>author;
+        std::cout<<"/n";
+        std::cout<<"Enter quantity of books :";
+        std::cin>>qty;
+        std::cout<<"/n";
+        std::cout<<"Enter book's price :";
+        std::cin>>price;
+        std::cout<<"/n";
+
+        int res=mysql_query(conn,"Insert into stud values(3)");
+
+    }
+
+
+/*FUNCTION DECLARATION*/
+
 void book_menu();
 void sup_menu();
 void pur_menu();
@@ -14,13 +42,10 @@ void emp_menu();
 void mem_menu();
 void sales_menu();
 
-/*CLASSES*/
-
-
 
 
 int main(){
-    /*
+    
     MYSQL* conn=NULL;
     conn = mysql_init(0);
     conn = mysql_real_connect(conn, "localhost", "root", "12345678", "rough", 0, NULL, 0);
@@ -30,6 +55,7 @@ int main(){
     } else {
         std::cout << "Not connected" << endl;
     }
+    /*
     int res=mysql_query(conn,"Insert into stud values(3)");
     if (res!=0){
         std::cout<<"error";
