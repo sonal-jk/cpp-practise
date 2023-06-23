@@ -1,6 +1,6 @@
-#pragma once
-#include <iostream>
-using namespace std;
+#ifndef cpp-practise_classes_h
+#define cpp-practise_classes_h
+
 class Book{};
 class Suppliers{};
 class Purchases{};
