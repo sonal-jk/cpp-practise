@@ -3,7 +3,7 @@
     {
       "name": "windows-gcc-x64",
       "includePath": [
-        "${workspaceFolder}/**","d:/Users/HIMAN/Documents/cpp-practise/functions.h","d:/Users/HIMAN/Documents/cpp-practise/classes.h"
+        "${workspaceFolder}/**"
       ],
       "compilerPath": "C:/mingw64/bin/gcc.exe",
       "cStandard": "${default}",
