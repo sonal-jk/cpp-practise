@@ -28,9 +28,9 @@ MYSQL* conn=NULL;
         std::cout<<"Enter book's price :";
         std::cin>>price;
         std::cout<<"/n";
-        /*string stat="Insert into books values" + "(" + ")";
+        string stat="Insert into books values" + "(" + ")";
         int res=mysql_query(conn,stat);
-*/
+
     }
 
 
