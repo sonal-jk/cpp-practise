@@ -6,10 +6,13 @@
 #include <C:\Program Files\MySQL\MySQL Server 8.0\include\mysql.h>
 #include "classes.h"
 #include <conio.h>
-
+#include <string.h>
+#include <sstream>
 using namespace std;
 MYSQL* conn=NULL;
-
+string query;
+stringstream stat;
+const char* a;
 
 /*CLASSES*/
     void Book::add(){
@@ -28,8 +31,17 @@ MYSQL* conn=NULL;
         std::cout<<"Enter book's price :";
         std::cin>>price;
         std::cout<<"/n";
-        string stat="Insert into books values" + "(" + ")";
-        int res=mysql_query(conn,stat);
+        stat.str("");
+        stat<<"Insert into books values("<<id<<",'"<<name<<"','"<<author<<"',"<<qty<<","<<price<<");";
+        query=stat.str();
+        a=query.c_str();
+        int res=mysql_query(conn,a);
+        if (res!=0){
+            std::cout<<"error";
+        }
+        else{
+            std::cout<<"success";
+        }
 
     }
 
@@ -120,7 +132,7 @@ int main(){
 /*FUNCTIONS FOR MENUS OF DIFFERENT CATEGORIES*/
 
 void book_menu(){
-  
+    Book b;
     int c;
     std::cout<<"--BOOKS MENU--\
     \n 1. Add\n 2. Update Price\n 3. Search\n 4. Display All\n 5. Return to Main Menu\n";
@@ -129,7 +141,7 @@ void book_menu(){
 
             switch(c){
             case 1:
-            std::cout<<"A";
+            b.add();
             break;
             
             case 2:
