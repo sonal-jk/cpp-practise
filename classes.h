@@ -13,7 +13,15 @@ class Book{
     void dis_all();
 };
 
-class Suppliers{};
+class Suppliers{
+    int id,phone;
+    string name,addr,city,state;
+    public:
+    void add();
+    void remove();
+    void search();
+};
+
 class Purchases{};
 class Employees{};
 class Members{};

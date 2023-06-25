@@ -134,6 +134,106 @@ void Book::dis_all(){
 
 }
 
+void Suppliers::add(){
+
+        std::cout<<"Enter supplier id :";
+        std::cin>>id;
+        std::cout<<"Enter supplier's name :";
+        std::cin>>name;
+        std::cout<<"Enter supplier's phone number :";
+        std::cin>>phone;
+        std::cout<<"Enter supplier's address :";
+        std::cin>>addr;
+        std::cout<<"Enter supplier's city :";
+        std::cin>>city;
+        std::cout<<"Enter supplier's state :";
+        std::cin>>state;
+        
+
+        stat.str("");
+        stat<<"Insert into suppliers values("<<id<<",'"<<name<<"',"<<phone<<",'"<<addr<<"','"<<city<<"','"<<state<<"');";
+        query=stat.str();
+        a=query.c_str();
+        int res=mysql_query(conn,a);
+
+        if (res!=0){
+            std::cout<<"error";
+        }
+        else{
+            std::cout<<"success";
+        }
+        std::cout<<"\n";
+        
+    }
+
+    void Suppliers::remove(){
+        std::cout<<"Enter supplier id to remove :";
+        std::cin>>id;
+
+        stat.str("");
+        stat<<"select * from suppliers where s_id="<<id<<";";
+        query=stat.str();
+        a=query.c_str();
+        mysql_query(conn,a);
+        result=mysql_store_result(conn);
+        while ((row=mysql_fetch_row(result)) !=NULL){
+            std::cout<<"\n";
+            std::cout<<"Supplier's id :"<<row[0]<<"\n";
+            std::cout<<"Supplier's name :"<<row[1]<<"\n";
+            std::cout<<"Supplier's phone :"<<row[2]<<"\n";
+            std::cout<<"Supplier's address :"<<row[3]<<"\n";
+            std::cout<<"Supplier's city :"<<row[4]<<"\n";
+            std::cout<<"Supplier's state :"<<row[5]<<"\n";
+        }
+        
+        char c;
+        std::cout<<"do you want to remove this supplier? type y/n :";
+        std::cin>>c;
+        if (c=='y'){
+            stat.str("");
+            stat<<"Delete from suppliers where s_id="<<id<<";";
+            query=stat.str();
+            a=query.c_str();
+            int res=mysql_query(conn,a);
+
+            if (res!=0){
+               std::cout<<"error";
+            }
+            else{
+               std::cout<<"success";
+            }
+            std::cout<<"\n";
+            }
+        else{
+            return;
+        }
+    }
+
+void Suppliers::search(){
+    std::cout<<"Enter book id to search :";
+    std::cin>>id;
+    stat.str("");
+    stat<<"select * from suppliers where s_id="<<id<<";";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+    result=mysql_store_result(conn);
+    std::cout<<"\n";
+    if ((row=mysql_fetch_row(result)) !=NULL){
+            std::cout<<"\n";
+            std::cout<<"Supplier's id :"<<row[0]<<"\n";
+            std::cout<<"Supplier's name :"<<row[1]<<"\n";
+            std::cout<<"Supplier's phone :"<<row[2]<<"\n";
+            std::cout<<"Supplier's address :"<<row[3]<<"\n";
+            std::cout<<"Supplier's city :"<<row[4]<<"\n";
+            std::cout<<"Supplier's state :"<<row[5]<<"\n";
+    }
+    else{
+        std::cout<<"No record found";
+    }
+    }
+
+
 
 /*FUNCTION DECLARATION*/
 
@@ -258,7 +358,7 @@ void book_menu(){
 }
 
 void sup_menu(){
-  
+    Suppliers s;
     int c;
     std::cout<<"--SUPPLIERS MENU--\
     \n 1. Add\n 2. Remove\n 3. Search\n 4. Return to Main Menu\n";
@@ -267,15 +367,15 @@ void sup_menu(){
 
             switch(c){
             case 1:
-            std::cout<<"A";
+            s.add();
             break;
             
             case 2:
-            std::cout<<"B";
+            s.remove();
             break;
        
             case 3:
-            std::cout<<"C";
+            s.search();
             break;
 
             case 4:
