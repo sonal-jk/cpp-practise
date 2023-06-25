@@ -252,7 +252,17 @@ void Employees::add(){
     std::cin>>city;
 
     stat.str("");
-    stat<<"";
+    stat<<"Insert into employees values("<<id<<",'"<<name<<"',"<<phone<<","<<salary<<",'"<<mng<<"','"<<addr<<"','"<<city<<"';";
+    query=stat.str();
+    a=query.c_str();
+    int res=mysql_query(conn,a);
+    if (res!=0){
+            std::cout<<"error";
+        }
+    else{
+            std::cout<<"success";
+        }
+    std::cout<<"\n";
 }
 
 
