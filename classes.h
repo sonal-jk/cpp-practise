@@ -8,6 +8,9 @@ class Book{
     string name, author;
     public:
     void add();
+    void up_price();
+    void search();
+    void dis_all();
 };
 
 class Suppliers{};

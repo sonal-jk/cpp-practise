@@ -9,41 +9,130 @@
 #include <string.h>
 #include <sstream>
 using namespace std;
+
 MYSQL* conn=NULL;
 string query;
 stringstream stat;
 const char* a;
+MYSQL_RES* result;
+MYSQL_ROW row;
 
-/*CLASSES*/
-    void Book::add(){
+/*CLASS FUNCTIONS*/
+
+void Book::add(){
+
         std::cout<<"Enter book id :";
         std::cin>>id;
-        std::cout<<"/n";
         std::cout<<"Enter book's name :";
         std::cin>>name;
-        std::cout<<"/n";
         std::cout<<"Enter author's name :";
         std::cin>>author;
-        std::cout<<"/n";
-        std::cout<<"Enter quantity of books :";
-        std::cin>>qty;
-        std::cout<<"/n";
         std::cout<<"Enter book's price :";
         std::cin>>price;
-        std::cout<<"/n";
+        std::cout<<"Enter quantity of books :";
+        std::cin>>qty;
+        
+
         stat.str("");
-        stat<<"Insert into books values("<<id<<",'"<<name<<"','"<<author<<"',"<<qty<<","<<price<<");";
+        stat<<"Insert into books values("<<id<<",'"<<name<<"','"<<author<<"',"<<price<<","<<qty<<");";
         query=stat.str();
         a=query.c_str();
         int res=mysql_query(conn,a);
+
         if (res!=0){
             std::cout<<"error";
         }
         else{
             std::cout<<"success";
         }
-
+        std::cout<<"\n";
+        
     }
+
+void Book:: up_price(){
+        
+        std::cout<<"Enter book id :";
+        std::cin>>id;
+        
+        stat.str("");
+        stat<<"select b_id,b_name,b_price from books where b_id="<<id<<";";
+        query=stat.str();
+        a=query.c_str();
+        mysql_query(conn,a);
+        result=mysql_store_result(conn);
+        while ((row=mysql_fetch_row(result)) !=NULL){
+            std::cout<<"Book's id :"<<row[0]<<"\n";
+            std::cout<<"Book's name :"<<row[1]<<"\n";
+            std::cout<<"Book's price :"<<row[2]<<"\n";
+        }
+        
+        char c;
+        std::cout<<"do you want to change the price? type y/n :";
+        std::cin>>c;
+        if (c=='y'){
+            std::cout<<"Enter book's new price :";
+            std::cin>>price;
+            stat.str("");
+            stat<<"Update books set b_price="<<price<<" where b_id="<<id<<";";
+            query=stat.str();
+            a=query.c_str();
+            int res=mysql_query(conn,a);
+
+            if (res!=0){
+               std::cout<<"error";
+            }
+            else{
+               std::cout<<"success";
+            }
+            std::cout<<"\n";
+            }
+        else{
+            return;
+        }
+        
+    }
+
+void Book::search(){
+    std::cout<<"Enter book id to search :";
+    std::cin>>id;
+    stat.str("");
+    stat<<"select * from books where b_id="<<id<<";";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+    result=mysql_store_result(conn);
+    std::cout<<"\n";
+    if ((row=mysql_fetch_row(result)) !=NULL){
+    std::cout<<"Book's id :"<<row[0]<<"\n";
+    std::cout<<"Book's name :"<<row[1]<<"\n";
+    std::cout<<"Book's author :"<<row[2]<<"\n";
+    std::cout<<"Book's price :"<<row[3]<<"\n";
+    std::cout<<"Book's quantity :"<<row[4]<<"\n";
+    }
+    else{
+        std::cout<<"No record found";
+    }
+}
+
+void Book::dis_all(){
+    int count=1;
+    stat.str("");
+    stat<<"select * from books;";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+    result=mysql_store_result(conn);
+    while ((row=mysql_fetch_row(result)) !=NULL){
+    std::cout<<"Book :"<<count<<"\n \n";
+    std::cout<<"Book's id :"<<row[0]<<"\n";
+    std::cout<<"Book's name :"<<row[1]<<"\n";
+    std::cout<<"Book's author :"<<row[2]<<"\n";
+    std::cout<<"Book's price :"<<row[3]<<"\n";
+    std::cout<<"Book's quantity :"<<row[4]<<"\n \n";
+    count++;
+    }
+
+}
 
 
 /*FUNCTION DECLARATION*/
@@ -55,7 +144,7 @@ void emp_menu();
 void mem_menu();
 void sales_menu();
 
-
+/*MAIN FUNCTION*/
 
 int main(){
     conn = mysql_init(0);
@@ -145,15 +234,15 @@ void book_menu(){
             break;
             
             case 2:
-            std::cout<<"B";
+            b.up_price();
             break;
        
             case 3:
-            std::cout<<"C";
+            b.search();
             break;
 
             case 4:
-            std::cout<<"D";
+            b.dis_all();
             break;
             
             case 5:
