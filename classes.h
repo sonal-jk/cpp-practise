@@ -22,8 +22,22 @@ class Suppliers{
     void search();
 };
 
-class Purchases{};
-class Employees{};
+class Purchases{
+    int sup_id, book_id,qty,price;
+    
+};
+
+class Employees{
+    int id,phone,salary;
+    string name,mng,addr,city;
+    public:
+    void add();
+    void search();
+    void assign_mng();
+    void view_all();
+    void up_sal();
+};
+
 class Members{};
 class Sales{};
 

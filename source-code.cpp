@@ -234,6 +234,27 @@ void Suppliers::search(){
     }
 
 
+void Employees::add(){
+    
+    std::cout<<"Enter employees id :";
+    std::cin>>id;
+    std::cout<<"Enter employees name :";
+    std::cin>>name;
+    std::cout<<"Enter employees phone number :";
+    std::cin>>phone;
+    std::cout<<"Enter employees salary :";
+    std::cin>>salary;
+    std::cout<<"Enter employees manager status in yes or no :";
+    std::cin>>mng;
+    std::cout<<"Enter employees address :";
+    std::cin>>addr;
+    std::cout<<"Enter employees city :";
+    std::cin>>city;
+
+    stat.str("");
+    stat<<"";
+}
+
 
 /*FUNCTION DECLARATION*/
 
