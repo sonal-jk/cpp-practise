@@ -166,7 +166,7 @@ void Suppliers::add(){
         
     }
 
-    void Suppliers::remove(){
+void Suppliers::remove(){
         std::cout<<"Enter supplier id to remove :";
         std::cin>>id;
 
@@ -210,7 +210,7 @@ void Suppliers::add(){
     }
 
 void Suppliers::search(){
-    std::cout<<"Enter book id to search :";
+    std::cout<<"Enter supplier id to search :";
     std::cin>>id;
     stat.str("");
     stat<<"select * from suppliers where s_id="<<id<<";";
@@ -263,6 +263,10 @@ void Employees::add(){
             std::cout<<"success";
         }
     std::cout<<"\n";
+}
+
+void Employees::search(){
+
 }
 
 
@@ -359,7 +363,7 @@ void book_menu(){
     std::cout<<"Select an option :";
     std::cin>>c;
 
-            switch(c){
+    switch(c){
             case 1:
             b.add();
             break;
@@ -396,7 +400,7 @@ void sup_menu(){
     std::cout<<"Select an option :";
     std::cin>>c;
 
-            switch(c){
+    switch(c){
             case 1:
             s.add();
             break;
@@ -429,7 +433,7 @@ void pur_menu(){
     std::cout<<"Select an option :";
     std::cin>>c;
 
-            switch(c){
+    switch(c){
             case 1:
             std::cout<<"A";
             break;
@@ -464,14 +468,14 @@ void emp_menu(){
     \n 1. New Employee\n 2. Search Employee\n 3. Assign Manager\n 4. View All\n 5. Update Salary\n 6. Return to Main Menu\n";
     std::cout<<"Select an option :";
     std::cin>>c;
-
-            switch(c){
+    Employees e;
+    switch(c){
             case 1:
-            std::cout<<"A";
+            e.add();
             break;
             
             case 2:
-            std::cout<<"B";
+            e.search();
             break;
        
             case 3:
@@ -506,7 +510,7 @@ void mem_menu(){
     std::cout<<"Select an option :";
     std::cin>>c;
 
-            switch(c){
+    switch(c){
             case 1:
             std::cout<<"A";
             break;
@@ -534,7 +538,7 @@ void sales_menu(){
     std::cout<<"Select an option :";
     std::cin>>c;
 
-            switch(c){
+    switch(c){
             case 1:
             std::cout<<"A";
             break;
