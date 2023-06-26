@@ -24,7 +24,12 @@ class Suppliers{
 
 class Purchases{
     int sup_id, book_id,qty,price;
-    
+    string ord_date,rec_date;
+    public:
+    void add();
+    void cancel();
+    void view_all();
+    void received();  
 };
 
 class Employees{
