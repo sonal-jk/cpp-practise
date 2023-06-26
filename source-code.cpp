@@ -252,7 +252,7 @@ void Employees::add(){
     std::cin>>city;
 
     stat.str("");
-    stat<<"Insert into employee values("<<id<<",'"<<name<<"',"<<phone<<","<<salary<<",'"<<mng<<"','"<<addr<<"','"<<city<<"';";
+    stat<<"Insert into employee values("<<id<<",'"<<name<<"',"<<phone<<","<<salary<<",'"<<mng<<"','"<<addr<<"','"<<city<<"');";
     query=stat.str();
     a=query.c_str();
     int res=mysql_query(conn,a);
@@ -307,14 +307,15 @@ void Employees::assign_mng(){
             std::cout<<"Employee's id :"<<row[0]<<"\n";
             std::cout<<"Employee's name :"<<row[1]<<"\n";
             std::cout<<"Employee's status :"<<row[2]<<"\n";
-            if (row[2]!="yes"){
+            string o=row[2];
+            if (o!="yes"){
 
                 char c;
                 std::cout<<"The employee isn't a manager. Do you want to change the status? type y/n :";
                 std::cin>>c;
                 if (c=='y'){
                    stat.str("");
-                   stat<<"Update employees set manager='yes' where e_id="<<id<<";";
+                   stat<<"Update employee set manager='yes' where e_id="<<id<<";";
                    query=stat.str();
                    a=query.c_str();
                    int res=mysql_query(conn,a);
