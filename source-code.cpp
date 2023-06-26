@@ -252,7 +252,7 @@ void Employees::add(){
     std::cin>>city;
 
     stat.str("");
-    stat<<"Insert into employees values("<<id<<",'"<<name<<"',"<<phone<<","<<salary<<",'"<<mng<<"','"<<addr<<"','"<<city<<"';";
+    stat<<"Insert into employee values("<<id<<",'"<<name<<"',"<<phone<<","<<salary<<",'"<<mng<<"','"<<addr<<"','"<<city<<"';";
     query=stat.str();
     a=query.c_str();
     int res=mysql_query(conn,a);
@@ -266,9 +266,136 @@ void Employees::add(){
 }
 
 void Employees::search(){
+    std::cout<<"Enter employee id to search :";
+    std::cin>>id;
+    stat.str("");
+    stat<<"select * from employee where e_id="<<id<<";";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+    result=mysql_store_result(conn);
+    std::cout<<"\n";
+    if ((row=mysql_fetch_row(result)) !=NULL){
+            std::cout<<"\n";
+            std::cout<<"Employee's id :"<<row[0]<<"\n";
+            std::cout<<"Employee's name :"<<row[1]<<"\n";
+            std::cout<<"Employee's phone :"<<row[2]<<"\n";
+            std::cout<<"Employee's salary :"<<row[3]<<"\n";
+            std::cout<<"Employee's mangerial status :"<<row[4]<<"\n";
+            std::cout<<"Employee's address :"<<row[5]<<"\n";
+            std::cout<<"Employee's city :"<<row[6]<<"\n";
+
+    }
+    else{
+        std::cout<<"No record found";
+    }
 
 }
 
+void Employees::assign_mng(){
+    std::cout<<"Enter employee id to check managerial status:";
+        std::cin>>id;
+        
+        stat.str("");
+        stat<<"select e_id,e_name,manager from employee where e_id="<<id<<";";
+        query=stat.str();
+        a=query.c_str();
+        mysql_query(conn,a);
+        result=mysql_store_result(conn);
+
+        while ((row=mysql_fetch_row(result)) !=NULL){
+            std::cout<<"Employee's id :"<<row[0]<<"\n";
+            std::cout<<"Employee's name :"<<row[1]<<"\n";
+            std::cout<<"Employee's status :"<<row[2]<<"\n";
+            if (row[2]!="yes"){
+
+                char c;
+                std::cout<<"The employee isn't a manager. Do you want to change the status? type y/n :";
+                std::cin>>c;
+                if (c=='y'){
+                   stat.str("");
+                   stat<<"Update employees set manager='yes' where e_id="<<id<<";";
+                   query=stat.str();
+                   a=query.c_str();
+                   int res=mysql_query(conn,a);
+
+                   if (res!=0){
+                     std::cout<<"error";
+                    }
+                   else{
+                     std::cout<<"success";
+                    }
+                   std::cout<<"\n";
+                }
+            else{
+               return;
+            }
+            }
+        }
+                
+}
+
+void Employees::view_all(){
+    int count=1;
+    stat.str("");
+    stat<<"select * from employee;";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+    result=mysql_store_result(conn);
+    while ((row=mysql_fetch_row(result)) !=NULL){
+    std::cout<<"\n";
+    std::cout<<"Employee's id :"<<row[0]<<"\n";
+    std::cout<<"Employee's name :"<<row[1]<<"\n";
+    std::cout<<"Employee's phone :"<<row[2]<<"\n";
+    std::cout<<"Employee's salary :"<<row[3]<<"\n";
+    std::cout<<"Employee's mangerial status :"<<row[4]<<"\n";
+    std::cout<<"Employee's address :"<<row[5]<<"\n";
+    std::cout<<"Employee's city :"<<row[6]<<"\n";
+    count++;
+    }
+}
+
+void Employees::up_sal(){
+    std::cout<<"Enter employee id :";
+        std::cin>>id;
+        
+        stat.str("");
+        stat<<"select e_id,e_name,e_sal from employee where e_id="<<id<<";";
+        query=stat.str();
+        a=query.c_str();
+        mysql_query(conn,a);
+        result=mysql_store_result(conn);
+        while ((row=mysql_fetch_row(result)) !=NULL){
+            std::cout<<"Employee's id :"<<row[0]<<"\n";
+            std::cout<<"Employee's name :"<<row[1]<<"\n";
+            std::cout<<"Employee's salary :"<<row[2]<<"\n";
+        }
+        
+        char c;
+        std::cout<<"do you want to change the salary? type y/n :";
+        std::cin>>c;
+        if (c=='y'){
+            std::cout<<"Enter Employee's new salary :";
+            std::cin>>salary;
+            stat.str("");
+            stat<<"Update employee set e_sal="<<salary<<" where e_id="<<id<<";";
+            query=stat.str();
+            a=query.c_str();
+            int res=mysql_query(conn,a);
+
+            if (res!=0){
+               std::cout<<"error";
+            }
+            else{
+               std::cout<<"success";
+            }
+            std::cout<<"\n";
+            }
+        else{
+            return;
+        }
+}
 
 /*FUNCTION DECLARATION*/
 
@@ -479,15 +606,15 @@ void emp_menu(){
             break;
        
             case 3:
-            std::cout<<"C";
+            e.assign_mng();
             break;
 
             case 4:
-            std::cout<<"D";
+            e.view_all();
             break;
 
             case 5:
-            std::cout<<"D";
+            e.up_sal();
             break;
             
             case 6:
