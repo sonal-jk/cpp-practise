@@ -304,6 +304,85 @@ void Purchases::mark_R(){
 
 }
 
+void Purchases::cancel(){
+        std::cout<<"Enter order id that needs to be cancelled:";
+        std::cin>>o_id;
+
+        stat.str("");
+        stat<<"select o_id,receive_date,mark from purchases where o_id="<<o_id<<";";
+        query=stat.str();
+        a=query.c_str();
+        mysql_query(conn,a);
+        result=mysql_store_result(conn);
+        if ((row=mysql_fetch_row(result)) !=NULL){
+            std::cout<<"\n";
+            std::cout<<"Purchase id :"<<row[0]<<"\n";
+            std::cout<<"Receiving Date :"<<row[1]<<"\n";
+            std::cout<<"Received or Not :"<<row[2]<<"\n";
+        }
+        else{
+            std::cout<<"No record found.";
+        }
+
+        std::cout<<"Cancelling the purchase...";
+        stat.str("");
+        stat<<"Update purchases set mark='C' where o_id="<<o_id<<";";
+        query=stat.str();
+        a=query.c_str();
+        if(mysql_query(conn,a)){
+            std::cout<<"error";
+        }
+        else{
+            std::cout<<"success";
+        }
+
+}
+
+void Purchases::view_all(){
+    int count=1;
+    stat.str("");
+    stat<<"select * from purchases;";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+    result=mysql_store_result(conn);
+    while ((row=mysql_fetch_row(result)) !=NULL){
+    std::cout<<"\n"<<"Purchase :"<<count<<"\n \n";
+    std::cout<<"Purchase id :"<<row[0]<<"\n";
+    std::cout<<"Supplier's id :"<<row[1]<<"\n";
+    std::cout<<"Book's id :"<<row[2]<<"\n";
+    std::cout<<"Purchase quantity :"<<row[3]<<"\n";
+    std::cout<<"Order date :"<<row[4]<<"\n";
+    std::cout<<"Receiving date :"<<row[5]<<"\n";
+    std::cout<<"Purchase price :"<<row[6]<<"\n";
+    std::cout<<"Purchase status :"<<row[7]<<"\n";
+    count++;
+    }
+}
+
+void Purchases::received(){
+    int count=1;
+    std::cout<<"All the received purchases :"<<"\n";
+    stat.str("");
+    stat<<"select * from purchases where mark='R';";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+    result=mysql_store_result(conn);
+    while ((row=mysql_fetch_row(result)) !=NULL){
+    std::cout<<"\n"<<"Purchase :"<<count<<"\n \n";
+    std::cout<<"Purchase id :"<<row[0]<<"\n";
+    std::cout<<"Supplier's id :"<<row[1]<<"\n";
+    std::cout<<"Book's id :"<<row[2]<<"\n";
+    std::cout<<"Purchase quantity :"<<row[3]<<"\n";
+    std::cout<<"Order date :"<<row[4]<<"\n";
+    std::cout<<"Receiving date :"<<row[5]<<"\n";
+    std::cout<<"Purchase price :"<<row[6]<<"\n";
+    std::cout<<"Purchase status :"<<row[7]<<"\n";
+    count++;
+    }
+}
+
 void Employees::add(){
     
     std::cout<<"Enter employees id :";
@@ -415,7 +494,7 @@ void Employees::view_all(){
     mysql_query(conn,a);
     result=mysql_store_result(conn);
     while ((row=mysql_fetch_row(result)) !=NULL){
-    std::cout<<"\n";
+    std::cout<<"Employee :"<<count<<"\n \n";
     std::cout<<"Employee's id :"<<row[0]<<"\n";
     std::cout<<"Employee's name :"<<row[1]<<"\n";
     std::cout<<"Employee's phone :"<<row[2]<<"\n";
@@ -627,7 +706,7 @@ void pur_menu(){
     Purchases p;
     int c;
     std::cout<<"--PURCHASES MENU--\
-    \n 1. New Order\n 2. Cancel Order\n 3. Mark Recieved\n 4. View All\n 5. Received Order\n 6. Return to Main Menu\n";
+    \n 1. New Order\n 2. Cancel Order\n 3. Mark Recieved\n 4. View All\n 5. Received Orders\n 6. Return to Main Menu\n";
     std::cout<<"Select an option :";
     std::cin>>c;
 
@@ -637,7 +716,7 @@ void pur_menu(){
             break;
             
             case 2:
-            p.mark_R();
+            p.cancel();
             break;
        
             case 3:
@@ -645,11 +724,11 @@ void pur_menu(){
             break;
             
             case 4:
-            std::cout<<"C";
+            p.view_all();
             break;
 
             case 5:
-            std::cout<<"D";
+            p.received();
             break;
             
             case 6:
