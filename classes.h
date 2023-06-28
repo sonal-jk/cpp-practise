@@ -24,7 +24,7 @@ class Suppliers{
 
 class Purchases{
     int o_id,sup_id, book_id,qty,price;
-    string ord_date,rec_date;
+    string rec_date;
     public:
     void add();
     void mark_R();
@@ -45,7 +45,14 @@ class Employees{
     void up_sal();
 };
 
-class Members{};
+class Members{
+    int id,phone;
+    string name,expiry;
+    public:
+    void add();
+    void search();
+    void refresh();
+};
 class Sales{};
 
 #endif

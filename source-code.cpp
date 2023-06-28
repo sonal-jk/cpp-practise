@@ -18,6 +18,8 @@ stringstream stat;
 const char* a;
 MYSQL_RES* result;
 MYSQL_ROW row;
+time_t t;
+tm *now;
 
 /*CLASS FUNCTIONS*/
 
@@ -249,8 +251,8 @@ void Purchases::add(){
         std::cout<<"Enter purchase price :";
         std::cin>>price;
         
-        time_t t= time(0);
-        tm *now= localtime(&t);
+        t= time(0);
+        now= localtime(&t);
         int y=1900+now->tm_year;
         int m=1+now->tm_mon;
         int d=now->tm_mday;
@@ -547,6 +549,68 @@ void Employees::up_sal(){
         }
 }
 
+void Members::add(){
+    std::cout<<"Enter Member id :";
+    std::cin>>id;
+    std::cout<<"Enter Member name :";
+    std::cin>>name;
+    std::cout<<"Enter Member's phone number :";
+    std::cin>>phone;
+    std::cout<<"Enter Membership validity date in format 'YYYY-MM-DD' :";
+    std::cin>>expiry;
+
+    stat.str("");
+    stat<<"Insert into members values("<<id<<",'"<<name<<"',"<<phone<<",'"<<expiry<<"','valid');";
+    query=stat.str();
+    a=query.c_str();
+    int res=mysql_query(conn,a);
+    if (res!=0){
+            std::cout<<"error";
+        }
+    else{
+            std::cout<<"success";
+        }
+    std::cout<<"\n";
+}
+
+void Members::search(){
+    std::cout<<"Enter Member id to search :";
+    std::cin>>id;
+    stat.str("");
+    stat<<"select * from members where m_id="<<id<<";";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+    result=mysql_store_result(conn);
+    std::cout<<"\n";
+    if ((row=mysql_fetch_row(result)) !=NULL){
+            std::cout<<"\n";
+            std::cout<<"Member id :"<<row[0]<<"\n";
+            std::cout<<"Member's name :"<<row[1]<<"\n";
+            std::cout<<"Member's phone :"<<row[2]<<"\n";
+            std::cout<<"Membership Expiry date :"<<row[3]<<"\n";
+            std::cout<<"Membership validity :"<<row[4]<<"\n";
+
+    }
+    else{
+        std::cout<<"No record found";
+    }
+}
+
+void Members::refresh(){
+    t= time(0);
+    now= localtime(&t);
+    int y=1900+now->tm_year;
+    int m=1+now->tm_mon;
+    int d=now->tm_mday;
+    stat.str("");
+    stat<<"Update members set validity='invalid' where expiry_date<'"<<y<<"-"<<m<<"-"<<d<<"';";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+}
+
+
 /*FUNCTION DECLARATION*/
 
 void book_menu();
@@ -784,8 +848,9 @@ void emp_menu(){
 }
 
 void mem_menu(){
-  
+    Members m;
     int c;
+    m.refresh();
     std::cout<<"--MEMBERS MENU--\
     \n 1. New Member\n 2. Search Member\n 3. Return to Main Menu\n";
     std::cout<<"Select an option :";
@@ -793,11 +858,11 @@ void mem_menu(){
 
     switch(c){
             case 1:
-            std::cout<<"A";
+            m.add();
             break;
             
             case 2:
-            std::cout<<"B";
+            m.search();
             break;
             
             case 3:
