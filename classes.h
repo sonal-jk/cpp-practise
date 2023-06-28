@@ -53,6 +53,13 @@ class Members{
     void search();
     void refresh();
 };
-class Sales{};
+class Sales{
+    int id,mem_id,book_id,qty,price;
+    string sale_date;
+    public:
+    void add();
+    void total();
+    void search();
+};
 
 #endif

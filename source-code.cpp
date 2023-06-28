@@ -571,6 +571,7 @@ void Members::add(){
             std::cout<<"success";
         }
     std::cout<<"\n";
+
 }
 
 void Members::search(){
@@ -610,6 +611,79 @@ void Members::refresh(){
     mysql_query(conn,a);
 }
 
+
+void Sales::add(){
+    std::cout<<"Enter Sale id :";
+    std::cin>>id;
+    std::cout<<"Enter Member id :";
+    std::cin>>mem_id;
+    std::cout<<"Enter Book id :";
+    std::cin>>book_id;
+    std::cout<<"Enter Sale Quantity :";
+    std::cin>>qty;
+    std::cout<<"Enter Sale date in format 'YYYY-MM-DD' :";
+    std::cin>>sale_date;
+    std::cout<<"Enter Sale price :";
+    std::cin>>price;
+
+    stat.str("");
+    stat<<"Insert into sales values("<<mem_id<<","<<book_id<<","<<qty<<",'"<<sale_date<<"',"<<id<<","<<price<<");";
+    query=stat.str();
+    a=query.c_str();
+    int res=mysql_query(conn,a);
+    if (res!=0){
+            std::cout<<"error";
+        }
+    else{
+            std::cout<<"success";
+        }
+    std::cout<<"\n";
+}
+
+void Sales::search(){
+    std::cout<<"Enter Sale id to search :";
+    std::cin>>id;
+    stat.str("");
+    stat<<"select * from sales where s_id="<<id<<";";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+    result=mysql_store_result(conn);
+    std::cout<<"\n";
+    if ((row=mysql_fetch_row(result)) !=NULL){
+            std::cout<<"\n";
+            std::cout<<"Sale id :"<<row[4]<<"\n";
+            std::cout<<"Member id :"<<row[0]<<"\n";
+            std::cout<<"Book id :"<<row[1]<<"\n";
+            std::cout<<"Sale quantity :"<<row[2]<<"\n";
+            std::cout<<"Sale date :"<<row[3]<<"\n";
+            std::cout<<"Sale price :"<<row[5]<<"\n";
+
+    }
+    else{
+        std::cout<<"No record found";
+    }
+}
+
+void Sales::total(){
+    int count=1;
+    stat.str("");
+    stat<<"select * from sales;";
+    query=stat.str();
+    a=query.c_str();
+    mysql_query(conn,a);
+    result=mysql_store_result(conn);
+    while ((row=mysql_fetch_row(result)) !=NULL){
+    std::cout<<"\n"<<"Sale :"<<count<<"\n \n";
+    std::cout<<"Sale id :"<<row[4]<<"\n";
+    std::cout<<"Member id :"<<row[0]<<"\n";
+    std::cout<<"Book id :"<<row[1]<<"\n";
+    std::cout<<"Sale quantity :"<<row[2]<<"\n";
+    std::cout<<"Sale date :"<<row[3]<<"\n";
+    std::cout<<"Sale price :"<<row[5]<<"\n";
+    count++;
+    }
+}
 
 /*FUNCTION DECLARATION*/
 
@@ -877,23 +951,27 @@ void mem_menu(){
 }
 
 void sales_menu(){
-  
+    Sales s;
     int c;
     std::cout<<"--SALES MENU--\
-    \n 1. New Receipt\n 2. Total Sales\n 3. Return to Main Menu\n";
+    \n 1. New Receipt\n 2. Search Sale\n 3. Total Sales\n 4. Return to Main Menu\n";
     std::cout<<"Select an option :";
     std::cin>>c;
 
     switch(c){
             case 1:
-            std::cout<<"A";
+            s.add();
             break;
             
             case 2:
-            std::cout<<"B";
+            s.search();
+            break;
+            
+            case 3:
+            s.total();
             break;
        
-            case 3:
+            case 4:
             return;
 
             default:
