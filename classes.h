@@ -23,13 +23,15 @@ class Suppliers{
 };
 
 class Purchases{
-    int sup_id, book_id,qty,price;
+    int o_id,sup_id, book_id,qty,price;
     string ord_date,rec_date;
     public:
     void add();
+    void mark_R();
     void cancel();
     void view_all();
-    void received();  
+    void received();
+
 };
 
 class Employees{

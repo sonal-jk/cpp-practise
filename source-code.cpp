@@ -8,6 +8,8 @@
 #include <conio.h>
 #include <string.h>
 #include <sstream>
+#include <ctime>
+
 using namespace std;
 
 MYSQL* conn=NULL;
@@ -233,6 +235,74 @@ void Suppliers::search(){
     }
     }
 
+void Purchases::add(){
+        std::cout<<"Enter purchase id :";
+        std::cin>>o_id;
+        std::cout<<"Enter supplier's id :";
+        std::cin>>sup_id;
+        std::cout<<"Enter book's id :";
+        std::cin>>book_id;
+        std::cout<<"Enter purchase quantity :";
+        std::cin>>qty;
+        std::cout<<"Enter purchase recieving date in format 'YYYY-MM-DD' :";
+        std::cin>>rec_date;
+        std::cout<<"Enter purchase price :";
+        std::cin>>price;
+        
+        time_t t= time(0);
+        tm *now= localtime(&t);
+        int y=1900+now->tm_year;
+        int m=1+now->tm_mon;
+        int d=now->tm_mday;
+
+        stat.str("");
+        stat<<"Insert into purchases values("<<o_id<<","<<sup_id<<","<<book_id<<","<<qty<<",'"<<y<<"-"<<m<<"-"<<d<<"','"<<rec_date<<"',"<<price<<",'N');";
+        query=stat.str();
+        a=query.c_str();
+        int res=mysql_query(conn,a);
+
+        if (res!=0){
+            std::cout<<"error";
+        }
+        else{
+            std::cout<<"success";
+            }
+
+}
+
+void Purchases::mark_R(){
+        std::cout<<"Enter order id that is received :";
+        std::cin>>o_id;
+
+        stat.str("");
+        stat<<"select o_id,receive_date,mark from purchases where o_id="<<o_id<<";";
+        query=stat.str();
+        a=query.c_str();
+        mysql_query(conn,a);
+        result=mysql_store_result(conn);
+        if ((row=mysql_fetch_row(result)) !=NULL){
+            std::cout<<"\n";
+            std::cout<<"Purchase id :"<<row[0]<<"\n";
+            std::cout<<"Receiving Date :"<<row[1]<<"\n";
+            std::cout<<"Received or Not :"<<row[2]<<"\n";
+        }
+        else{
+            std::cout<<"No record found.";
+        }
+
+        std::cout<<"Changing Receive Status...";
+        stat.str("");
+        stat<<"Update purchases set mark='R' where o_id="<<o_id<<";";
+        query=stat.str();
+        a=query.c_str();
+        if(mysql_query(conn,a)){
+            std::cout<<"error";
+        }
+        else{
+            std::cout<<"success";
+        }
+
+}
 
 void Employees::add(){
     
@@ -554,31 +624,35 @@ void sup_menu(){
 }
 
 void pur_menu(){
-  
+    Purchases p;
     int c;
     std::cout<<"--PURCHASES MENU--\
-    \n 1. New Order\n 2. Cancel Order\n 3. View All\n 4. Received Order\n 5. Return to Main Menu\n";
+    \n 1. New Order\n 2. Cancel Order\n 3. Mark Recieved\n 4. View All\n 5. Received Order\n 6. Return to Main Menu\n";
     std::cout<<"Select an option :";
     std::cin>>c;
 
     switch(c){
             case 1:
-            std::cout<<"A";
+            p.add();
             break;
             
             case 2:
-            std::cout<<"B";
+            p.mark_R();
             break;
        
             case 3:
+            p.mark_R();
+            break;
+            
+            case 4:
             std::cout<<"C";
             break;
 
-            case 4:
+            case 5:
             std::cout<<"D";
             break;
             
-            case 5:
+            case 6:
             return;
 
             default:
