@@ -1,9 +1,10 @@
 /*---BOOKSTORE MANAGEMENT SYSTEM---*/
 
-
+//All the header files that need to be included...
 #include <iostream>
 #include "windows.h"
 #include <C:\Program Files\MySQL\MySQL Server 8.0\include\mysql.h>
+//user defined header file
 #include "classes.h"
 #include <conio.h>
 #include <string.h>
@@ -12,19 +13,24 @@
 
 using namespace std;
 
+
+//Global variables
 MYSQL* conn=NULL;
 string query;
 stringstream stat;
 const char* a;
 MYSQL_RES* result;
 MYSQL_ROW row;
+
+//Current date
 time_t t= time(0);
 tm *now= localtime(&t);
 int y=1900+now->tm_year;
 int m=1+now->tm_mon;
 int d=now->tm_mday;
 
-/*CLASS FUNCTIONS*/
+
+/*--CLASS FUNCTIONS--*/
 
 void Book::add(){
 
@@ -100,13 +106,16 @@ void Book:: up_price(){
     }
 
 void Book::search(){
+
     std::cout<<"Enter book id to search :";
     std::cin>>id;
+
     stat.str("");
     stat<<"select * from books where b_id="<<id<<";";
     query=stat.str();
     a=query.c_str();
     mysql_query(conn,a);
+
     result=mysql_store_result(conn);
     std::cout<<"\n";
     if ((row=mysql_fetch_row(result)) !=NULL){
@@ -122,12 +131,14 @@ void Book::search(){
 }
 
 void Book::dis_all(){
+
     int count=1;
     stat.str("");
     stat<<"select * from books;";
     query=stat.str();
     a=query.c_str();
     mysql_query(conn,a);
+
     result=mysql_store_result(conn);
     while ((row=mysql_fetch_row(result)) !=NULL){
     std::cout<<"Book :"<<count<<"\n \n";
@@ -174,6 +185,7 @@ void Suppliers::add(){
     }
 
 void Suppliers::remove(){
+
         std::cout<<"Enter supplier id to remove :";
         std::cin>>id;
 
@@ -217,13 +229,16 @@ void Suppliers::remove(){
     }
 
 void Suppliers::search(){
+
     std::cout<<"Enter supplier id to search :";
     std::cin>>id;
+
     stat.str("");
     stat<<"select * from suppliers where s_id="<<id<<";";
     query=stat.str();
     a=query.c_str();
     mysql_query(conn,a);
+
     result=mysql_store_result(conn);
     std::cout<<"\n";
     if ((row=mysql_fetch_row(result)) !=NULL){
@@ -241,6 +256,7 @@ void Suppliers::search(){
     }
 
 void Purchases::add(){
+
         std::cout<<"Enter purchase id :";
         std::cin>>o_id;
         std::cout<<"Enter supplier's id :";
@@ -253,8 +269,6 @@ void Purchases::add(){
         std::cin>>rec_date;
         std::cout<<"Enter purchase price :";
         std::cin>>price;
-        
-       
 
         stat.str("");
         stat<<"Insert into purchases values("<<o_id<<","<<sup_id<<","<<book_id<<","<<qty<<",'"<<y<<"-"<<m<<"-"<<d<<"','"<<rec_date<<"',"<<price<<",'N');";
@@ -272,6 +286,7 @@ void Purchases::add(){
 }
 
 void Purchases::mark_R(){
+
         std::cout<<"Enter order id that is received :";
         std::cin>>o_id;
 
@@ -302,10 +317,10 @@ void Purchases::mark_R(){
         else{
             std::cout<<"success";
         }
-
 }
 
 void Purchases::cancel(){
+
         std::cout<<"Enter order id that needs to be cancelled:";
         std::cin>>o_id;
 
@@ -340,6 +355,7 @@ void Purchases::cancel(){
 }
 
 void Purchases::view_all(){
+
     int count=1;
     stat.str("");
     stat<<"select * from purchases;";
@@ -347,6 +363,7 @@ void Purchases::view_all(){
     a=query.c_str();
     mysql_query(conn,a);
     result=mysql_store_result(conn);
+
     while ((row=mysql_fetch_row(result)) !=NULL){
     std::cout<<"\n"<<"Purchase :"<<count<<"\n \n";
     std::cout<<"Purchase id :"<<row[0]<<"\n";
@@ -362,6 +379,7 @@ void Purchases::view_all(){
 }
 
 void Purchases::received(){
+
     int count=1;
     std::cout<<"All the received purchases :"<<"\n";
     stat.str("");
@@ -370,6 +388,7 @@ void Purchases::received(){
     a=query.c_str();
     mysql_query(conn,a);
     result=mysql_store_result(conn);
+
     while ((row=mysql_fetch_row(result)) !=NULL){
     std::cout<<"\n"<<"Purchase :"<<count<<"\n \n";
     std::cout<<"Purchase id :"<<row[0]<<"\n";
@@ -416,8 +435,10 @@ void Employees::add(){
 }
 
 void Employees::search(){
+
     std::cout<<"Enter employee id to search :";
     std::cin>>id;
+
     stat.str("");
     stat<<"select * from employee where e_id="<<id<<";";
     query=stat.str();
@@ -425,6 +446,7 @@ void Employees::search(){
     mysql_query(conn,a);
     result=mysql_store_result(conn);
     std::cout<<"\n";
+
     if ((row=mysql_fetch_row(result)) !=NULL){
             std::cout<<"\n";
             std::cout<<"Employee's id :"<<row[0]<<"\n";
@@ -443,7 +465,8 @@ void Employees::search(){
 }
 
 void Employees::assign_mng(){
-    std::cout<<"Enter employee id to check managerial status:";
+
+        std::cout<<"Enter employee id to check managerial status:";
         std::cin>>id;
         
         stat.str("");
@@ -487,6 +510,7 @@ void Employees::assign_mng(){
 }
 
 void Employees::view_all(){
+
     int count=1;
     stat.str("");
     stat<<"select * from employee;";
@@ -494,6 +518,7 @@ void Employees::view_all(){
     a=query.c_str();
     mysql_query(conn,a);
     result=mysql_store_result(conn);
+
     while ((row=mysql_fetch_row(result)) !=NULL){
     std::cout<<"Employee :"<<count<<"\n \n";
     std::cout<<"Employee's id :"<<row[0]<<"\n";
@@ -508,7 +533,8 @@ void Employees::view_all(){
 }
 
 void Employees::up_sal(){
-    std::cout<<"Enter employee id :";
+
+        std::cout<<"Enter employee id :";
         std::cin>>id;
         
         stat.str("");
@@ -549,6 +575,7 @@ void Employees::up_sal(){
 }
 
 void Members::add(){
+
     std::cout<<"Enter Member id :";
     std::cin>>id;
     std::cout<<"Enter Member name :";
@@ -574,8 +601,10 @@ void Members::add(){
 }
 
 void Members::search(){
+
     std::cout<<"Enter Member id to search :";
     std::cin>>id;
+
     stat.str("");
     stat<<"select * from members where m_id="<<id<<";";
     query=stat.str();
@@ -598,6 +627,7 @@ void Members::search(){
 }
 
 void Members::refresh(){
+
     stat.str("");
     stat<<"Update members set validity='invalid' where expiry_date<'"<<y<<"-"<<m<<"-"<<d<<"';";
     query=stat.str();
@@ -607,6 +637,7 @@ void Members::refresh(){
 
 
 void Sales::add(){
+
     std::cout<<"Enter Sale id :";
     std::cin>>id;
     std::cout<<"Enter Member id :";
@@ -635,8 +666,10 @@ void Sales::add(){
 }
 
 void Sales::search(){
+
     std::cout<<"Enter Sale id to search :";
     std::cin>>id;
+
     stat.str("");
     stat<<"select * from sales where s_id="<<id<<";";
     query=stat.str();
@@ -660,6 +693,7 @@ void Sales::search(){
 }
 
 void Sales::total(){
+
     int count=1;
     stat.str("");
     stat<<"select * from sales;";
@@ -667,6 +701,7 @@ void Sales::total(){
     a=query.c_str();
     mysql_query(conn,a);
     result=mysql_store_result(conn);
+
     while ((row=mysql_fetch_row(result)) !=NULL){
     std::cout<<"\n"<<"Sale :"<<count<<"\n \n";
     std::cout<<"Sale id :"<<row[4]<<"\n";
@@ -679,7 +714,8 @@ void Sales::total(){
     }
 }
 
-/*FUNCTION DECLARATION*/
+
+/*--FUNCTION DECLARATION--*/
 
 void book_menu();
 void sup_menu();
@@ -688,7 +724,8 @@ void emp_menu();
 void mem_menu();
 void sales_menu();
 
-/*MAIN FUNCTION*/
+
+/*--MAIN FUNCTION--*/
 
 int main(){
     conn = mysql_init(0);
@@ -699,16 +736,8 @@ int main(){
     } else {
         std::cout << "Not connected" << endl;
     }
-    /*
-    int res=mysql_query(conn,"Insert into stud values(3)");
-    if (res!=0){
-        std::cout<<"error";
-    }
-    else{
-        std::cout<<"success";
-    }
-*/
-    /*START*/
+
+    /*--START--*/
 
    std::cout<<"WELCOME TO THE BOOKSTORE!";
 
@@ -762,7 +791,7 @@ int main(){
    return 0;
 }
 
-/*FUNCTIONS FOR MENUS OF DIFFERENT CATEGORIES*/
+/*--FUNCTIONS FOR MENUS OF DIFFERENT CATEGORIES--*/
 
 void book_menu(){
     Book b;

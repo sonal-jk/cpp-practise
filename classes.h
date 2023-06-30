@@ -1,7 +1,11 @@
+//SELF-MADE HEADER FILE 
+
 #ifndef CLASSES_H
 #define CLASSES_H
 #include <iostream>
 using namespace std;
+
+//--CLASS DECLARATIONS--
 
 class Book{
     int id,price,qty;
