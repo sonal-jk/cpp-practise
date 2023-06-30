@@ -18,8 +18,11 @@ stringstream stat;
 const char* a;
 MYSQL_RES* result;
 MYSQL_ROW row;
-time_t t;
-tm *now;
+time_t t= time(0);
+tm *now= localtime(&t);
+int y=1900+now->tm_year;
+int m=1+now->tm_mon;
+int d=now->tm_mday;
 
 /*CLASS FUNCTIONS*/
 
@@ -251,11 +254,7 @@ void Purchases::add(){
         std::cout<<"Enter purchase price :";
         std::cin>>price;
         
-        t= time(0);
-        now= localtime(&t);
-        int y=1900+now->tm_year;
-        int m=1+now->tm_mon;
-        int d=now->tm_mday;
+       
 
         stat.str("");
         stat<<"Insert into purchases values("<<o_id<<","<<sup_id<<","<<book_id<<","<<qty<<",'"<<y<<"-"<<m<<"-"<<d<<"','"<<rec_date<<"',"<<price<<",'N');";
@@ -599,11 +598,6 @@ void Members::search(){
 }
 
 void Members::refresh(){
-    t= time(0);
-    now= localtime(&t);
-    int y=1900+now->tm_year;
-    int m=1+now->tm_mon;
-    int d=now->tm_mday;
     stat.str("");
     stat<<"Update members set validity='invalid' where expiry_date<'"<<y<<"-"<<m<<"-"<<d<<"';";
     query=stat.str();
