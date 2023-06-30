@@ -106,5 +106,6 @@
     "typeinfo": "cpp",
     "sstream": "cpp",
     "ctime": "cpp"
-  }
+  },
+  "C_Cpp_Runner.useLinkTimeOptimization": false
 }

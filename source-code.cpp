@@ -33,7 +33,7 @@ int d=now->tm_mday;
 /*--CLASS FUNCTIONS--*/
 
 void Book::add(){
-
+        std::cout<<"\n";
         std::cout<<"Enter book id :";
         std::cin>>id;
         std::cout<<"Enter book's name :";
@@ -730,22 +730,22 @@ void sales_menu();
 int main(){
     conn = mysql_init(0);
     conn = mysql_real_connect(conn, "localhost", "root", "12345678", "rough", 0, NULL, 0);
-
+    
     if(conn){
-        std::cout << "Connected" << endl;
+        std::cout << "Connection Established...\n" << endl;
     } else {
-        std::cout << "Not connected" << endl;
+        std::cout << "Not connected...\n" << endl;
     }
 
     /*--START--*/
 
-   std::cout<<"WELCOME TO THE BOOKSTORE!";
+   std::cout<<"\n\n--WELCOME TO THE BOOKSTORE!--\n\n";
 
     string ans="yes";
     while (ans=="yes"){
         int c;
         std::cout<<" Please select an option from the given list by typing the number:\
-           \n 1. Books\n 2. Suppliers\n 3. Purchases\n 4. Employees\n 5. Members\n 6. Sales\n 7. Exit"<<"\n";
+           \n\n 1. Books\n 2. Suppliers\n 3. Purchases\n 4. Employees\n 5. Members\n 6. Sales\n 7. Exit"<<"\n\n";
         
         std::cout<<"Select one option :";
         std::cin>>c;
@@ -786,7 +786,7 @@ int main(){
         }    
     std::cout<<"\n"<<"Do you want to continue? Type yes or no :";
     std::cin>>ans;
-
+    std::cout<<"\n";
     }
    return 0;
 }
@@ -797,7 +797,7 @@ void book_menu(){
     Book b;
     int c;
     std::cout<<"--BOOKS MENU--\
-    \n 1. Add\n 2. Update Price\n 3. Search\n 4. Display All\n 5. Return to Main Menu\n";
+    \n\n 1. Add\n 2. Update Price\n 3. Search\n 4. Display All\n 5. Return to Main Menu\n\n";
     std::cout<<"Select an option :";
     std::cin>>c;
 
@@ -834,7 +834,7 @@ void sup_menu(){
     Suppliers s;
     int c;
     std::cout<<"--SUPPLIERS MENU--\
-    \n 1. Add\n 2. Remove\n 3. Search\n 4. Return to Main Menu\n";
+    \n\n 1. Add\n 2. Remove\n 3. Search\n 4. Return to Main Menu\n\n";
     std::cout<<"Select an option :";
     std::cin>>c;
 
@@ -867,7 +867,7 @@ void pur_menu(){
     Purchases p;
     int c;
     std::cout<<"--PURCHASES MENU--\
-    \n 1. New Order\n 2. Cancel Order\n 3. Mark Recieved\n 4. View All\n 5. Received Orders\n 6. Return to Main Menu\n";
+    \n\n 1. New Order\n 2. Cancel Order\n 3. Mark Recieved\n 4. View All\n 5. Received Orders\n 6. Return to Main Menu\n\n";
     std::cout<<"Select an option :";
     std::cin>>c;
 
@@ -907,7 +907,7 @@ void emp_menu(){
   
     int c;
     std::cout<<"--EMPLOYEE MENU--\
-    \n 1. New Employee\n 2. Search Employee\n 3. Assign Manager\n 4. View All\n 5. Update Salary\n 6. Return to Main Menu\n";
+    \n\n 1. New Employee\n 2. Search Employee\n 3. Assign Manager\n 4. View All\n 5. Update Salary\n 6. Return to Main Menu\n\n";
     std::cout<<"Select an option :";
     std::cin>>c;
     Employees e;
@@ -949,7 +949,7 @@ void mem_menu(){
     int c;
     m.refresh();
     std::cout<<"--MEMBERS MENU--\
-    \n 1. New Member\n 2. Search Member\n 3. Return to Main Menu\n";
+    \n\n 1. New Member\n 2. Search Member\n 3. Return to Main Menu\n\n";
     std::cout<<"Select an option :";
     std::cin>>c;
 
@@ -977,7 +977,7 @@ void sales_menu(){
     Sales s;
     int c;
     std::cout<<"--SALES MENU--\
-    \n 1. New Receipt\n 2. Search Sale\n 3. Total Sales\n 4. Return to Main Menu\n";
+    \n\n 1. New Receipt\n 2. Search Sale\n 3. Total Sales\n 4. Return to Main Menu\n\n";
     std::cout<<"Select an option :";
     std::cin>>c;
 
