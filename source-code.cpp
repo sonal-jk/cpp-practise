@@ -37,9 +37,10 @@ void Book::add(){
         std::cout<<"Enter book id :";
         std::cin>>id;
         std::cout<<"Enter book's name :";
-        std::cin>>name;
+        getline(std::cin,name);
+        std::cout<<"\n";
         std::cout<<"Enter author's name :";
-        std::cin>>author;
+        getline(std::cin,author);
         std::cout<<"Enter book's price :";
         std::cin>>price;
         std::cout<<"Enter quantity of books :";
