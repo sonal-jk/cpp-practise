@@ -291,7 +291,7 @@ void Purchases::add(){
         else{
             std::cout<<"Record added successfully!";
             }
-
+        std::cout<<"\n";
 }
 
 void Purchases::mark_R(){
@@ -312,7 +312,9 @@ void Purchases::mark_R(){
             std::cout<<"Received or Not :"<<row[2]<<"\n";
         }
         else{
-            std::cout<<"No record found.";
+            std::cout<<"No record found...";
+            std::cout<<"\n";
+            return;
         }
 
         std::cout<<"Changing Receive Status...";
@@ -321,15 +323,16 @@ void Purchases::mark_R(){
         query=stat.str();
         a=query.c_str();
         if(mysql_query(conn,a)){
-            std::cout<<"error";
+            std::cout<<"Error!";
         }
         else{
-            std::cout<<"success";
+            std::cout<<"Status changed successfully!";
         }
+        std::cout<<"\n";
 }
 
 void Purchases::cancel(){
-
+        std::cout<<"\n";
         std::cout<<"Enter order id that needs to be cancelled:";
         std::cin>>o_id;
 
@@ -346,7 +349,9 @@ void Purchases::cancel(){
             std::cout<<"Received or Not :"<<row[2]<<"\n";
         }
         else{
-            std::cout<<"No record found.";
+            std::cout<<"No record found...";
+            std::cout<<"\n";
+            return;
         }
 
         std::cout<<"Cancelling the purchase...";
@@ -355,16 +360,17 @@ void Purchases::cancel(){
         query=stat.str();
         a=query.c_str();
         if(mysql_query(conn,a)){
-            std::cout<<"error";
+            std::cout<<"Error!";
         }
         else{
-            std::cout<<"success";
+            std::cout<<"Purchase cancelled successfully!";
         }
+        std::cout<<"\n";
 
 }
 
 void Purchases::view_all(){
-
+    std::cout<<"\n";
     int count=1;
     stat.str("");
     stat<<"select * from purchases;";
@@ -388,7 +394,7 @@ void Purchases::view_all(){
 }
 
 void Purchases::received(){
-
+    std::cout<<"\n";
     int count=1;
     std::cout<<"All the received purchases :"<<"\n";
     stat.str("");
@@ -413,21 +419,23 @@ void Purchases::received(){
 }
 
 void Employees::add(){
-    
+    std::cout<<"\n";
     std::cout<<"Enter employees id :";
     std::cin>>id;
+    cin.ignore();
     std::cout<<"Enter employees name :";
-    std::cin>>name;
+    getline(std::cin,name);
     std::cout<<"Enter employees phone number :";
     std::cin>>phone;
     std::cout<<"Enter employees salary :";
     std::cin>>salary;
     std::cout<<"Enter employees manager status in yes or no :";
     std::cin>>mng;
+    cin.ignore();
     std::cout<<"Enter employees address :";
-    std::cin>>addr;
+    getline(std::cin,addr);
     std::cout<<"Enter employees city :";
-    std::cin>>city;
+    getline(std::cin,city);
 
     stat.str("");
     stat<<"Insert into employee values("<<id<<",'"<<name<<"',"<<phone<<","<<salary<<",'"<<mng<<"','"<<addr<<"','"<<city<<"');";
@@ -435,16 +443,16 @@ void Employees::add(){
     a=query.c_str();
     int res=mysql_query(conn,a);
     if (res!=0){
-            std::cout<<"error";
+            std::cout<<"Error!";
         }
     else{
-            std::cout<<"success";
+            std::cout<<"Record added successfully!";
         }
     std::cout<<"\n";
 }
 
 void Employees::search(){
-
+    std::cout<<"\n";
     std::cout<<"Enter employee id to search :";
     std::cin>>id;
 
@@ -468,13 +476,13 @@ void Employees::search(){
 
     }
     else{
-        std::cout<<"No record found";
+        std::cout<<"No record found...";
     }
 
 }
 
 void Employees::assign_mng(){
-
+        std::cout<<"\n";
         std::cout<<"Enter employee id to check managerial status:";
         std::cin>>id;
         
@@ -503,14 +511,15 @@ void Employees::assign_mng(){
                    int res=mysql_query(conn,a);
 
                    if (res!=0){
-                     std::cout<<"error";
+                     std::cout<<"Error!";
                     }
                    else{
-                     std::cout<<"success";
+                     std::cout<<"Status changed successfully!";
                     }
                    std::cout<<"\n";
                 }
             else{
+               std::cout<<"Already a manager..\n";
                return;
             }
             }
@@ -519,7 +528,7 @@ void Employees::assign_mng(){
 }
 
 void Employees::view_all(){
-
+    std::cout<<"\n";
     int count=1;
     stat.str("");
     stat<<"select * from employee;";
@@ -539,10 +548,11 @@ void Employees::view_all(){
     std::cout<<"Employee's city :"<<row[6]<<"\n";
     count++;
     }
+    std::cout<<"\n";
 }
 
 void Employees::up_sal(){
-
+        std::cout<<"\n";
         std::cout<<"Enter employee id :";
         std::cin>>id;
         
@@ -552,14 +562,19 @@ void Employees::up_sal(){
         a=query.c_str();
         mysql_query(conn,a);
         result=mysql_store_result(conn);
-        while ((row=mysql_fetch_row(result)) !=NULL){
+        if ((row=mysql_fetch_row(result)) !=NULL){
             std::cout<<"Employee's id :"<<row[0]<<"\n";
             std::cout<<"Employee's name :"<<row[1]<<"\n";
             std::cout<<"Employee's salary :"<<row[2]<<"\n";
         }
+        else{
+            std::cout<<"No record found...";
+            std::cout<<"\n";
+            return;
+        }
         
         char c;
-        std::cout<<"do you want to change the salary? type y/n :";
+        std::cout<<"Do you want to change the salary? type y/n :";
         std::cin>>c;
         if (c=='y'){
             std::cout<<"Enter Employee's new salary :";
@@ -571,24 +586,26 @@ void Employees::up_sal(){
             int res=mysql_query(conn,a);
 
             if (res!=0){
-               std::cout<<"error";
+               std::cout<<"Error!";
             }
             else{
-               std::cout<<"success";
+               std::cout<<"Salary updated successfully!";
             }
             std::cout<<"\n";
             }
-        else{
+        else{ 
+            std::cout<<"\n";
             return;
         }
 }
 
 void Members::add(){
-
+    std::cout<<"\n";
     std::cout<<"Enter Member id :";
     std::cin>>id;
+    cin.ignore();
     std::cout<<"Enter Member name :";
-    std::cin>>name;
+    getline(std::cin,name);
     std::cout<<"Enter Member's phone number :";
     std::cin>>phone;
     std::cout<<"Enter Membership validity date in format 'YYYY-MM-DD' :";
@@ -600,17 +617,17 @@ void Members::add(){
     a=query.c_str();
     int res=mysql_query(conn,a);
     if (res!=0){
-            std::cout<<"error";
+            std::cout<<"Error!";
         }
     else{
-            std::cout<<"success";
+            std::cout<<"Record added successfully!";
         }
     std::cout<<"\n";
 
 }
 
 void Members::search(){
-
+    std::cout<<"\n";
     std::cout<<"Enter Member id to search :";
     std::cin>>id;
 
@@ -631,7 +648,7 @@ void Members::search(){
 
     }
     else{
-        std::cout<<"No record found";
+        std::cout<<"No record found...";
     }
 }
 
@@ -646,7 +663,7 @@ void Members::refresh(){
 
 
 void Sales::add(){
-
+    std::cout<<"\n";
     std::cout<<"Enter Sale id :";
     std::cin>>id;
     std::cout<<"Enter Member id :";
@@ -666,16 +683,16 @@ void Sales::add(){
     a=query.c_str();
     int res=mysql_query(conn,a);
     if (res!=0){
-            std::cout<<"error";
+            std::cout<<"Error!";
         }
     else{
-            std::cout<<"success";
+            std::cout<<"Record added successfully!";
         }
     std::cout<<"\n";
 }
 
 void Sales::search(){
-
+    std::cout<<"\n";
     std::cout<<"Enter Sale id to search :";
     std::cin>>id;
 
@@ -697,12 +714,13 @@ void Sales::search(){
 
     }
     else{
-        std::cout<<"No record found";
+        std::cout<<"No record found...";
+        std::cout<<"\n";
     }
 }
 
 void Sales::total(){
-
+    std::cout<<"\n";
     int count=1;
     stat.str("");
     stat<<"select * from sales;";
@@ -721,6 +739,7 @@ void Sales::total(){
     std::cout<<"Sale price :"<<row[5]<<"\n";
     count++;
     }
+    std::cout<<"\n";
 }
 
 
