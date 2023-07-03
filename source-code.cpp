@@ -36,9 +36,12 @@ void Book::add(){
         std::cout<<"\n";
         std::cout<<"Enter book id :";
         std::cin>>id;
+        //If not added then >> operator only takes the input and leaves '\n' character which when read by getline() moves to next input
+        //input buffer is cleared of any left over new line characters from the previous input
+        cin.ignore(); 
         std::cout<<"Enter book's name :";
+        //getlie fn is used to take a complete sentence or more as for cin, it only takes a single word or character
         getline(std::cin,name,'\n');
-        std::cout<<"\n";
         std::cout<<"Enter author's name :";
         getline(std::cin,author,'\n');
         std::cout<<"Enter book's price :";
@@ -54,20 +57,21 @@ void Book::add(){
         int res=mysql_query(conn,a);
 
         if (res!=0){
-            std::cout<<"error";
+            std::cout<<"Error!";
         }
         else{
-            std::cout<<"success";
+            std::cout<<"Record added successfully!";
         }
         std::cout<<"\n";
         
     }
 
 void Book:: up_price(){
-        
+        std::cout<<"\n";
         std::cout<<"Enter book id :";
         std::cin>>id;
         
+        std::cout<<"\n";
         stat.str("");
         stat<<"select b_id,b_name,b_price from books where b_id="<<id<<";";
         query=stat.str();
@@ -81,8 +85,9 @@ void Book:: up_price(){
         }
         
         char c;
-        std::cout<<"do you want to change the price? type y/n :";
+        std::cout<<"\nDo you want to change the price? type y/n :";
         std::cin>>c;
+        std::cout<<"\n";
         if (c=='y'){
             std::cout<<"Enter book's new price :";
             std::cin>>price;
@@ -93,10 +98,10 @@ void Book:: up_price(){
             int res=mysql_query(conn,a);
 
             if (res!=0){
-               std::cout<<"error";
+               std::cout<<"Error!";
             }
             else{
-               std::cout<<"success";
+               std::cout<<"Price changed Successfully!";
             }
             std::cout<<"\n";
             }
@@ -107,7 +112,7 @@ void Book:: up_price(){
     }
 
 void Book::search(){
-
+    std::cout<<"\n";
     std::cout<<"Enter book id to search :";
     std::cin>>id;
 
@@ -127,12 +132,12 @@ void Book::search(){
     std::cout<<"Book's quantity :"<<row[4]<<"\n";
     }
     else{
-        std::cout<<"No record found";
+        std::cout<<"No record found...";
     }
 }
 
 void Book::dis_all(){
-
+    std::cout<<"\n";
     int count=1;
     stat.str("");
     stat<<"select * from books;";
@@ -154,19 +159,21 @@ void Book::dis_all(){
 }
 
 void Suppliers::add(){
-
+        std::cout<<"\n";
         std::cout<<"Enter supplier id :";
         std::cin>>id;
+        cin.ignore();
         std::cout<<"Enter supplier's name :";
-        std::cin>>name;
+        getline(std::cin,name);
         std::cout<<"Enter supplier's phone number :";
         std::cin>>phone;
+        cin.ignore();
         std::cout<<"Enter supplier's address :";
-        std::cin>>addr;
+        getline(std::cin,addr);
         std::cout<<"Enter supplier's city :";
-        std::cin>>city;
+        getline(std::cin,city);
         std::cout<<"Enter supplier's state :";
-        std::cin>>state;
+         getline(std::cin,state);
         
 
         stat.str("");
@@ -176,17 +183,17 @@ void Suppliers::add(){
         int res=mysql_query(conn,a);
 
         if (res!=0){
-            std::cout<<"error";
+            std::cout<<"Error!";
         }
         else{
-            std::cout<<"success";
+            std::cout<<"Record added successfully!";
         }
         std::cout<<"\n";
         
     }
 
 void Suppliers::remove(){
-
+        std::cout<<"\n";
         std::cout<<"Enter supplier id to remove :";
         std::cin>>id;
 
@@ -196,7 +203,7 @@ void Suppliers::remove(){
         a=query.c_str();
         mysql_query(conn,a);
         result=mysql_store_result(conn);
-        while ((row=mysql_fetch_row(result)) !=NULL){
+        if ((row=mysql_fetch_row(result)) !=NULL){
             std::cout<<"\n";
             std::cout<<"Supplier's id :"<<row[0]<<"\n";
             std::cout<<"Supplier's name :"<<row[1]<<"\n";
@@ -204,10 +211,10 @@ void Suppliers::remove(){
             std::cout<<"Supplier's address :"<<row[3]<<"\n";
             std::cout<<"Supplier's city :"<<row[4]<<"\n";
             std::cout<<"Supplier's state :"<<row[5]<<"\n";
-        }
+        
         
         char c;
-        std::cout<<"do you want to remove this supplier? type y/n :";
+        std::cout<<"\nDo you want to remove this supplier? type y/n :";
         std::cin>>c;
         if (c=='y'){
             stat.str("");
@@ -217,20 +224,21 @@ void Suppliers::remove(){
             int res=mysql_query(conn,a);
 
             if (res!=0){
-               std::cout<<"error";
+               std::cout<<"Error!";
             }
             else{
-               std::cout<<"success";
+               std::cout<<"Record deleted successfully!";
             }
-            std::cout<<"\n";
-            }
+            } }
         else{
+            std::cout<<"No record found...";
             return;
         }
+        std::cout<<"\n";
     }
 
 void Suppliers::search(){
-
+    std::cout<<"\n";
     std::cout<<"Enter supplier id to search :";
     std::cin>>id;
 
@@ -257,7 +265,7 @@ void Suppliers::search(){
     }
 
 void Purchases::add(){
-
+        std::cout<<"\n";
         std::cout<<"Enter purchase id :";
         std::cin>>o_id;
         std::cout<<"Enter supplier's id :";
@@ -278,16 +286,16 @@ void Purchases::add(){
         int res=mysql_query(conn,a);
 
         if (res!=0){
-            std::cout<<"error";
+            std::cout<<"Error!";
         }
         else{
-            std::cout<<"success";
+            std::cout<<"Record added successfully!";
             }
 
 }
 
 void Purchases::mark_R(){
-
+        std::cout<<"\n";
         std::cout<<"Enter order id that is received :";
         std::cin>>o_id;
 
