@@ -18,7 +18,8 @@ class Book{
 };
 
 class Suppliers{
-    int id,phone;
+    int id; 
+    long long int phone;
     string name,addr,city,state;
     public:
     void add();
@@ -39,7 +40,8 @@ class Purchases{
 };
 
 class Employees{
-    int id,phone,salary;
+    int id;
+    long long int phone,salary;
     string name,mng,addr,city;
     public:
     void add();
@@ -50,7 +52,8 @@ class Employees{
 };
 
 class Members{
-    int id,phone;
+    int id; 
+    long long int phone;
     string name,expiry;
     public:
     void add();

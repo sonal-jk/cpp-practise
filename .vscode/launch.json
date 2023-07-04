@@ -9,7 +9,7 @@
       "stopAtEntry": false,
       "externalConsole": true,
       "cwd": "d:/Users/HIMAN/Documents/cpp-practise",
-      "program": "d:/Users/HIMAN/Documents/cpp-practise/build/Debug/outDebug",
+      "program": "d:/Users/HIMAN/Documents/cpp-practise/build/Release/outRelease",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
