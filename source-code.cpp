@@ -767,7 +767,7 @@ int main(){
 
     /*--START--*/
 
-   std::cout<<"\n\n--WELCOME TO THE BOOKSTORE!--\n\n";
+   std::cout<<"\n\n--WELCOME TO THE LIBRARY!--\n\n";
 
     string ans="yes";
     while (ans=="yes"){
